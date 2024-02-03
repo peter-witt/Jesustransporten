@@ -4,6 +4,7 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 public class Enemy : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Enemy : MonoBehaviour
     private float timer = 0;
     public float speed = 10f;
     public float roamSpeed = 1f;
+    public int health = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -27,17 +29,24 @@ public class Enemy : MonoBehaviour
         if (target != null)
         {
             rb.velocity = (target.transform.position - transform.position).normalized * speed * Time.deltaTime;
+            float angle = (float)Math.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
+            gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
         else
         {
+            Debug.Log(timer);
             if (timer <= 0)
             {
                 timer = 2f;
                 transform.Rotate(new Vector3(0, 0, UnityEngine.Random.Range(-360f, 360f)));
             }
-
+            Debug.Log(rb.velocity);
             rb.velocity = transform.up * roamSpeed * Time.deltaTime;
             timer -= Time.deltaTime;
+        }
+
+       if (health <= 0) {
+            GameObject.Destroy(gameObject);
         }
     }
 
@@ -54,8 +63,8 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            GameObject.Destroy(target);
-            target = null;
+            // GameObject.Destroy(target);
+            // target = null;
         }
     }
 }
