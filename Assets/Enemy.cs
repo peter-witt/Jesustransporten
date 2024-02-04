@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using System;
+using UnityEditor;
 
 public class Enemy : MonoBehaviour
 {
@@ -56,6 +57,7 @@ public class Enemy : MonoBehaviour
         {
             Debug.Log("Trigger player");
             target = collision.gameObject;
+            transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, 0, 180));
         }
     }
 

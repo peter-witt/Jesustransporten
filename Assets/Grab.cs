@@ -18,8 +18,11 @@ public class Grab : MonoBehaviour
     {
         if (gabbed != null)
         {
-            gabbed.GetComponent<Rigidbody2D>().AddForce((transform.position - gabbed.transform.position).normalized * 10000f * Time.deltaTime);
+            gabbed.GetComponent<Rigidbody2D>().AddForce((transform.position - gabbed.transform.position).normalized * 50000f * Time.deltaTime);
         }
+
+        Vector3 p = gameObject.transform.position;
+        Camera.main.transform.position = new Vector3(p.x, p.y, -10);
 
     }
 
