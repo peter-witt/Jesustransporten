@@ -55,6 +55,9 @@ public class Movement : MonoBehaviour
                 Debug.Log("dist " + dist);
                 if (dist <= hitDist) {
                     e.health -= damage;
+                    if(e.health <= 0) {
+                        GetComponent<AudioSource>().Play();
+                    }
                     Debug.Log("HIT " + e.health);
                     animator.SetTrigger("Hitting");
                 }
