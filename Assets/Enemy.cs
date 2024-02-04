@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
     private GameObject target;
-
+    private Vector2 randomDirection;
+    private float timer = 0;
     public float speed = 10f;
+    public float roamSpeed = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -18,10 +22,22 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        var rb = GetComponent<Rigidbody2D>();
+
         if (target != null)
         {
-            var rb = GetComponent<Rigidbody2D>();
             rb.velocity = (target.transform.position - transform.position).normalized * speed * Time.deltaTime;
+        }
+        else
+        {
+            if (timer <= 0)
+            {
+                timer = 2f;
+                transform.Rotate(new Vector3(0, 0, UnityEngine.Random.Range(-360f, 360f)));
+            }
+
+            rb.velocity = transform.up * roamSpeed * Time.deltaTime;
+            timer -= Time.deltaTime;
         }
     }
 
