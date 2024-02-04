@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Tag
+  - Jesus
   layers:
   - Default
   - TransparentFX
